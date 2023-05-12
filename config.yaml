@@ -1,0 +1,17 @@
+credentials:
+  usernames:
+    jsmith:
+      email: sanou.ezekiel226@gmail.com
+      name: Sanou Ezekiel
+      password: $2b$12$Rtb1tnugIpfmtBD.DTy9uOvt3ILrDDIcFVzqT8WmC9GGtl753QUM6 # To be replaced with hashed password
+    rbriggs:
+      email: hsanououedraogo@gmail.com
+      name: Sanou Ouedraogo
+      password: $2b$12$ngb1NXnRYB0NhzvmuG.Sbux7OBND0NepS6VyJYykSiYioe7f5T6/u # To be replaced with hashed password
+cookie:
+  expiry_days: 30
+  key: AAFTSS # Must be string
+  name: amd_ssedev
+preauthorized:
+  emails:
+  - kounadiad626@gmail.com

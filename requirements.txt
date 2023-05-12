@@ -1,0 +1,6 @@
+altair
+vega_datasets
+streamlit_option_menu
+streamlit_authenticator
+pyyaml
+mysql-connector-python
