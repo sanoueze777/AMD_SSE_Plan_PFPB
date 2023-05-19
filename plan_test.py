@@ -243,54 +243,14 @@ if authentication_status:
     st.sidebar.title(f"{expert_name} ")
     st.sidebar.markdown('###')
     st.sidebar.markdown("### Parametres")
-    start_year, end_year = st.sidebar.slider(
-        "Période",
-        min_value=min_year, max_value=max_year,
-        value=(min_year, max_year))
-
-    st.sidebar.markdown('###')
-    origins = st.sidebar.multiselect('Origins', origin_list,
-                                     default=origin_list)
-    st.sidebar.markdown('###')
-    item1 = st.sidebar.selectbox('element 1', item_list, index=0)
-    item2 = st.sidebar.selectbox('element 2', item_list, index=3)
-
-    df_rng = df[(df['YYYY'] >= start_year) & (df['YYYY'] <= end_year)]
-    source = df_rng[df_rng['Origin'].isin(origins)]
+   
 
     # Content
  
     
     
     
-    base = alt.Chart(source).properties(height=300)
-    
-    bar = base.mark_bar().encode(
-        x=alt.X('count(Origin):Q', title='Number of Records'),
-        y=alt.Y('Origin:N', title='Origin'),
-        color=alt.Color('Origin:N', legend=None)
-    )
 
-    point = base.mark_circle(size=50).encode(
-        x=alt.X(item1 + ':Q', title=item1),
-        y=alt.Y(item2 + ':Q', title=item2),
-        color=alt.Color('Origin:N', title='',
-                        legend=alt.Legend(orient='bottom-left'))
-    )
-
-    line1 = base.mark_line(size=5).encode(
-        x=alt.X('yearmonth(Year):T', title='Date'),
-        y=alt.Y('mean(' + item1 + '):Q', title='exemple'),
-        color=alt.Color('Origin:N', title='',
-                        legend=alt.Legend(orient='bottom-left'))
-    )
-
-    line2 = base.mark_line(size=5).encode(
-        x=alt.X('yearmonth(Year):T', title='Date'),
-        y=alt.Y('mean(' + item2 + '):Q', title='exemple'),
-        color=alt.Color('Origin:N', title='',
-                        legend=alt.Legend(orient='bottom-left'))
-    )
 
     # Layout (Content)
     Main_df = pd.DataFrame({"Mission": [""], "Date de début": [""], "Date de fin": [""], "Expert": [""], "Champ d'activités": [""], "Temps de travail estimé": [None]})
