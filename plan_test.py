@@ -14,8 +14,6 @@ from sqlite3 import Error
 from datetime import datetime
 import mysql.connector
 from pandasql import sqldf
-import matplotlib.pyplot as plt
-import mysql.connector
 
 
 ##########################################  deployed
