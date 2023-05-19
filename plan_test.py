@@ -13,7 +13,12 @@ import sqlite3
 from sqlite3 import Error
 from datetime import datetime
 import mysql.connector
+from pandasql import sqldf
+import matplotlib.pyplot as plt
+import mysql.connector
 
+
+##########################################  deployed
 """ """""""""
 
 
@@ -60,6 +65,19 @@ def select_from_mission(conn):
     conn.commit()
     return cur
 
+def select_all_actions(conn):
+    """
+    Create a new project into the projects table
+    :param conn:
+    :param project:
+    :return: project id
+    """
+    sql = '''SELECT * from Action_executee'''
+    cur = conn.cursor(buffered=True)
+    cur.execute(sql)
+    conn.commit()
+    return cur
+
 
 def select_from_experts(conn):
     """
@@ -73,6 +91,21 @@ def select_from_experts(conn):
     cur.execute(sql)
     conn.commit()
     return cur
+
+
+def select_all_experts(conn):
+    """
+    Create a new project into the projects table
+    :param conn:
+    :param project:
+    :return: project id
+    """
+    sql = '''SELECT * from Expert_activite'''
+    cur = conn.cursor(buffered=True)
+    cur.execute(sql)
+    conn.commit()
+    return cur
+
 
 def create_task(conn, task):
     """
@@ -122,7 +155,12 @@ def insert_mission(conn, task):
     conn.commit()
 
     return cur.lastrowid
+def highlight_survived(s):
+    return ['background-color: lightgreen']*len(s) if 50<s else ['background-color: pink']*len(s)
 
+def color_survived(val):
+    color = 'green' if 50<val else 'pink'
+    return f'background-color: {color}'
 
 """"""""""""
 
@@ -168,6 +206,9 @@ if authentication_status:
     records1 = select_from_mission(conn).fetchall()
     records2 = select_from_experts(conn).fetchall()
     
+    experts_table = select_all_actions(conn).fetchall()
+    missions_table = select_all_actions(conn).fetchall()
+    
     missions_list = []
     experts_list = []
     
@@ -204,7 +245,11 @@ if authentication_status:
     st.sidebar.title(f"{expert_name} ")
     st.sidebar.markdown('###')
     st.sidebar.markdown("### Parametres")
-    
+    start_year, end_year = st.sidebar.slider(
+        "Période",
+        min_value=min_year, max_value=max_year,
+        value=(min_year, max_year))
+
     st.sidebar.markdown('###')
     origins = st.sidebar.multiselect('Origins', origin_list,
                                      default=origin_list)
@@ -212,7 +257,43 @@ if authentication_status:
     item1 = st.sidebar.selectbox('element 1', item_list, index=0)
     item2 = st.sidebar.selectbox('element 2', item_list, index=3)
 
+    df_rng = df[(df['YYYY'] >= start_year) & (df['YYYY'] <= end_year)]
+    source = df_rng[df_rng['Origin'].isin(origins)]
+
+    # Content
+ 
     
+    
+    
+    base = alt.Chart(source).properties(height=300)
+    
+    bar = base.mark_bar().encode(
+        x=alt.X('count(Origin):Q', title='Number of Records'),
+        y=alt.Y('Origin:N', title='Origin'),
+        color=alt.Color('Origin:N', legend=None)
+    )
+
+    point = base.mark_circle(size=50).encode(
+        x=alt.X(item1 + ':Q', title=item1),
+        y=alt.Y(item2 + ':Q', title=item2),
+        color=alt.Color('Origin:N', title='',
+                        legend=alt.Legend(orient='bottom-left'))
+    )
+
+    line1 = base.mark_line(size=5).encode(
+        x=alt.X('yearmonth(Year):T', title='Date'),
+        y=alt.Y('mean(' + item1 + '):Q', title='exemple'),
+        color=alt.Color('Origin:N', title='',
+                        legend=alt.Legend(orient='bottom-left'))
+    )
+
+    line2 = base.mark_line(size=5).encode(
+        x=alt.X('yearmonth(Year):T', title='Date'),
+        y=alt.Y('mean(' + item2 + '):Q', title='exemple'),
+        color=alt.Color('Origin:N', title='',
+                        legend=alt.Legend(orient='bottom-left'))
+    )
+
     # Layout (Content)
     Main_df = pd.DataFrame({"Mission": [""], "Date de début": [""], "Date de fin": [""], "Expert": [""], "Champ d'activités": [""], "Temps de travail estimé": [None]})
 
@@ -313,29 +394,78 @@ if authentication_status:
                 expert_inséré = (mission,champ_act_planifié,Temps_tra_planifié,expert)
                 expert_inséré_id = insert_expert(conn, expert_inséré)
             st.write("Enregistré avec succès !")
-
-                
-                
-                
+        
+        experts_table = pd.DataFrame(experts_table, columns = ["Numero","Expert","Date","Mission","Activité","Temps de travail","Lieu de travail" ])
+        
+        #xperts_table.colunms = ["Numero","Expert","Date","Mission","Activité","Temps de travail","Lieu de travail" ]
+        
+        experts_table["taux d'exécution %"]=0
+        for i in range(len(experts_table)):
+            if experts_table.loc[i,"Activité"] == "Réunions cadrage /démarrage":
+                experts_table.loc[i,"taux d'exécution %"] = 5
+            elif experts_table.loc[i,"Activité"] == "Atelier cadrage":
+                experts_table.loc[i,"taux d'exécution %"] = 5
+            elif experts_table.loc[i,"Activité"] == "Outils collecte":
+                experts_table.loc[i,"taux d'exécution %"] = 15
+            elif experts_table.loc[i,"Activité"] == "Collecte données 1 (entretiens)":
+                experts_table.loc[i,"taux d'exécution %"] = 30
+            elif experts_table.loc[i,"Activité"] == "Collecte données 2 (Revue doc/BD)":
+                experts_table.loc[i,"taux d'exécution %"] = 45
+            elif experts_table.loc[i,"Activité"] == "Reunion étape mise en œuvre":
+                experts_table.loc[i,"taux d'exécution %"] = 60
+            elif experts_table.loc[i,"Activité"] == "Rapports d'étude":
+                experts_table.loc[i,"taux d'exécution %"] = 80
+            elif experts_table.loc[i,"Activité"] == "Atelier examen /validation":
+                experts_table.loc[i,"taux d'exécution %"] = 100
+            else:
+                experts_table.loc[i,"taux d'exécution %"] = None
+        #st.table(experts_table)
+        currentMonth = datetime.now().month
+        currentYear = datetime.now().year
+        #experts_table = experts_table[(pd.DatetimeIndex(experts_table['Date']).month==currentMonth) & (pd.DatetimeIndex(experts_table["Date"]).year==currentYear)]
+        
+        st.write("Activité des experts ce mois")
+        
+        
+        experts_summary = experts_table.groupby("Expert")["Temps de travail"].sum()
+        experts_summary = experts_summary.to_frame()
+        st.dataframe(experts_summary.style.applymap(color_survived, subset=["Temps de travail"]))
+        
         left_column, right_column = st.columns(2)
         df = pd.DataFrame(
             np.random.randn(100, 2) / [1, 1] + [17.573934, -3.9861092],
             columns=['lat', 'lon'])
+        
 
-        left_column.map(df)
-        left_column.markdown(
-            '**Indicateur  1 exemple')
-        left_column.altair_chart(bar, use_container_width=True)
 
-        right_column.markdown(
-            '**Indicateur 2 exemple' )
-        right_column.altair_chart(point, use_container_width=True)
+    # Content
+ 
+    
 
-        left_column.markdown( '_ (Indicateur  3 exemple )**')
-        left_column.altair_chart(line1, use_container_width=True)
+        for i in range(len(experts_table)):
+            experts_table.loc[i,"Temps de travail"] = float(experts_table.loc[i,"Temps de travail"])
+        
+        
+        chart = alt.Chart(experts_table).mark_bar().encode(
+        x='Activité', y='Temps de travail',color='Expert')
+        chart.save('chart.html')
 
-        right_column.markdown('_ (Indicateur  4 exemple)**')
-        right_column.altair_chart(line2, use_container_width=True)
+        right_column.altair_chart(chart, use_container_width=True)
+        #left_column.chart_1
+        
+        chart_2 = alt.Chart(experts_table).mark_bar().encode(
+        x='Mission', y='Temps de travail',color='Expert')
+        chart.save('chart.html')
+
+        left_column.altair_chart(chart_2, use_container_width=True)
+        
+        chart_3 = alt.Chart(experts_table).mark_bar().encode(
+        x='Temps de travail', y='Expert',color='Mission')
+        chart.save('chart.html')
+
+        st.altair_chart(chart_3, use_container_width=True)
+        
+        st.dataframe(experts_table.style.applymap(color_survived, subset=["taux d'exécution %"]))
         
         
         
@@ -371,8 +501,67 @@ if authentication_status:
                 mission_insérée = (mission,derniere_action,champ_act_planifié,Temps_tra_planifié)
                 mission_insérée_inséré_id = insert_mission(conn, mission_insérée)
             st.write("Enregistré avec succès !")
-            
-            
+        
+        
+        experts_table = pd.DataFrame(experts_table, columns = ["Numero","Expert","Date","Mission","Activité","Temps de travail","Lieu de travail" ])
+        
+        experts_table["taux d'exécution %"] = 0
+        for i in range(len(experts_table)):
+            if experts_table.loc[i,"Activité"] == "Réunions cadrage /démarrage":
+                experts_table.loc[i,"taux d'exécution %"] = 5
+            elif experts_table.loc[i,"Activité"] == "Atelier cadrage":
+                experts_table.loc[i,"taux d'exécution %"] = 5
+            elif experts_table.loc[i,"Activité"] == "Outils collecte":
+                experts_table.loc[i,"taux d'exécution %"] = 15
+            elif experts_table.loc[i,"Activité"] == "Collecte données 1 (entretiens )":
+                experts_table.loc[i,"taux d'exécution %"] = 30
+            elif experts_table.loc[i,"Activité"] == "Collecte données 2 (Revue doc/BD)":
+                experts_table.loc[i,"taux d'exécution %"] = 45
+            elif experts_table.loc[i,"Activité"] == "Reunion étape mise en œuvre":
+                experts_table.loc[i,"taux d'exécution %"] = 60
+            elif experts_table.loc[i,"Activité"] == "Rapports d'étude":
+                experts_table.loc[i,"taux d'exécution %"] = 80
+            elif experts_table.loc[i,"Activité"] == "Atelier examen /validation":
+                experts_table.loc[i,"taux d'exécution %"] = 100
+            else:
+                experts_table.loc[i,"taux d'exécution %"] = None
+                
+                
+        table_summary = experts_table.groupby("Mission")["taux d'exécution %"].max()
+        table_summary = table_summary.to_frame()
+        st.dataframe(table_summary.style.applymap(color_survived, subset=["taux d'exécution %"]))
+        
+        
+        
+        left_column, right_column = st.columns(2)
+        
+        
+        for i in range(len(experts_table)):
+            experts_table.loc[i,"Temps de travail"] = float(experts_table.loc[i,"Temps de travail"])
+        
+        
+        chart = alt.Chart(experts_table).mark_bar().encode(
+        x='Mission', y='Temps de travail',color='Expert')
+        chart.save('chart.html')
+
+        right_column.altair_chart(chart, use_container_width=True)
+        #left_column.chart_1
+        
+        chart_2 = alt.Chart(experts_table).mark_bar().encode(
+        x='Mission', y='Temps de travail',color='Expert')
+        chart.save('chart.html')
+
+        left_column.altair_chart(chart_2, use_container_width=True)
+        
+        chart_3 = alt.Chart(experts_table).mark_bar().encode(
+        x='Temps de travail', y='Expert',color='Mission')
+        chart.save('chart.html')
+
+        st.altair_chart(chart_3, use_container_width=True)
+        
+        st.dataframe(experts_table.style.applymap(color_survived, subset=["taux d'exécution %"]))
+        
+        
 
 elif authentication_status is False:
     st.error('Username/password is incorrect')
