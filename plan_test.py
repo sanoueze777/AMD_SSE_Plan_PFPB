@@ -133,7 +133,7 @@ def insert_expert(conn, task):
     sql = ''' INSERT INTO Expert_activite(missions,champs_activites,temps_travail,nom)
               VALUES(?,?,?,?) '''
     cur = conn.cursor(buffered=True)
-    cur.execute(sql, (task))
+    cur.execute(sql, (task,))
     conn.commit()
 
     return cur.lastrowid
@@ -149,7 +149,7 @@ def insert_mission(conn, task):
     sql = ''' INSERT INTO Mission_executee(mission,date_derniere_action,champ_activite_derniere_action,volume_travail_total)
               VALUES(?,?,?,?) '''
     cur = conn.cursor(buffered=True)
-    cur.execute(sql, (task))
+    cur.execute(sql, (task,))
     conn.commit()
 
     return cur.lastrowid
