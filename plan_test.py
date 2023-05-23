@@ -301,7 +301,7 @@ if authentication_status:
                     mission = edited_df.loc[i,"Mission"]
                     champ_act_planifié = edited_df.loc[i,"Champ d'activités"]
                     Temps_tra_planifié = float(edited_df.loc[i,"Temps de travail estimé"])
-                    action_planifié = (mission,date_debut,date_fin,responsable,champ_act_planifié,Temps_tra_planifié)
+                    action_planifié = (mission,str(date_debut),str(date_fin),responsable,champ_act_planifié,Temps_tra_planifié)
                     action_executed_id = create_task(conn, action_planifié)
                 st.write("Enregistré avec succès !")
 
