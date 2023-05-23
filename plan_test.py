@@ -114,9 +114,9 @@ def create_task(conn, task):
     """
 
     sql = ''' INSERT INTO Action_planifiee(mission,date_debut,date_fin,expert,champ_activites,temps_travail)
-              VALUES(?,?,?,?,?,?) '''% task
+              VALUES(?,?,?,?,?,?) '''
     cur = conn.cursor()
-    cur.execute(sql)
+    cur.execute(sql, task)
     conn.commit()
 
     return cur.lastrowid
