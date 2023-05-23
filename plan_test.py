@@ -114,7 +114,7 @@ def create_task(conn, task):
     """
 
     sql = ''' INSERT INTO Action_planifiee(mission,date_debut,date_fin,expert,champ_activites,temps_travail)
-              VALUES(?,?,?,?,?,?) '''
+              VALUES(%s,%s,%s,%s,%s,%s) '''
     cur = conn.cursor()
     cur.execute(sql, task)
     conn.commit()
