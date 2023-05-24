@@ -57,7 +57,7 @@ def select_from_mission(conn):
     :param project:
     :return: project id
     """
-    sql = '''SELECT DISTINCT mission from mission_executee'''
+    sql = '''SELECT DISTINCT mission from Mission_executee'''
     cur = conn.cursor(buffered=True)
     cur.execute(sql)
     conn.commit()
