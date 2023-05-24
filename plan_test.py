@@ -203,10 +203,10 @@ if authentication_status:
     conn = create_connection(database)
     records1 = select_from_mission(conn).fetchall()
     records2 = select_from_experts(conn).fetchall()
-    
+    records1 
     experts_table = select_all_actions(conn).fetchall()
     missions_table = select_all_actions(conn).fetchall()
-    missions_table 
+
     missions_list = []
     experts_list = []
     
