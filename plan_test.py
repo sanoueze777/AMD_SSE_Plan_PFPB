@@ -28,7 +28,7 @@ def create_connection(db_file):
     """
     conn = None
     try:
-        conn = mysql.connector.connect(user='u152993259_webmasteramd15', password='Jesussauve7',
+        conn = mysql.connector.connect(user=DB_USERNAME, password=DB_TOKEN,
                               host='sql735.main-hosting.eu',
                               database=db_file)
     except Error as e:
