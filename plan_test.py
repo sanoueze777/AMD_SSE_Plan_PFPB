@@ -206,7 +206,7 @@ if authentication_status:
     
     experts_table = select_all_actions(conn).fetchall()
     missions_table = select_all_actions(conn).fetchall()
-    
+    missions_table 
     missions_list = []
     experts_list = []
     
