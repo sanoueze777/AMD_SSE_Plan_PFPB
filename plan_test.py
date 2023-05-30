@@ -28,7 +28,7 @@ def create_connection(db_file):
     """
     conn = None
     try:
-        conn = mysql.connector.connect(user=st.secrets["DB_USERNAME"], password=st.secrets["DB_TOKEN"],
+        conn = mysql.connector.connect(user='u152993259_webmasteramd15', password='Jesussauve7',
                               host='sql735.main-hosting.eu',
                               database=db_file)
     except Error as e:
@@ -272,9 +272,7 @@ if authentication_status:
         
         df["Champ d'activités"] = ( df["Champ d'activités"].astype("category").cat.add_categories(Activities_group_list)
     )
-        df["Temps de travail estimé"] = (
-        df["Temps de travail estimé"].astype("category").cat.add_categories(Working_time)
-    )
+        df["Temps de travail estimé"] = 0
         
         edited_df = st.experimental_data_editor(df, num_rows="dynamic")
         if st.button('Enregistrer'):
