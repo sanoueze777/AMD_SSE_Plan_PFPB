@@ -5,6 +5,7 @@ credentials:
       name: Sanou Ezekiel
       password: $2b$12$Rtb1tnugIpfmtBD.DTy9uOvt3ILrDDIcFVzqT8WmC9GGtl753QUM6 # To be replaced with hashed password
     Z_Benjamin:
+      email: sanou.ezekiel226@gmail.com
       name: ZOUNGRANA Benjamin
       password: $2b$12$Rtb1tnugIpfmtBD.DTy9uOvt3ILrDDIcFVzqT8WmC9GGtl753QUM6 # To be replaced with hashed password
     
