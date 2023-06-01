@@ -430,8 +430,8 @@ if authentication_status:
                 update_mode='MODEL_CHANGED', 
                 fit_columns_on_grid_load=False,
                 enable_enterprise_modules=True,
-                height=350, 
-                width='10%',
+                height=500, 
+                width='100%',
                 reload_data=True
                 )
         
