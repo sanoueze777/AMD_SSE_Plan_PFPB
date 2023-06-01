@@ -415,7 +415,7 @@ if authentication_status:
         
         st.dataframe(experts_table.style.applymap(color_survived, subset=["taux d'exécution %"]))
 
-        gb = GridOptionsBuilder.from_dataframe(data)
+        gb = GridOptionsBuilder.from_dataframe(experts_table)
         gb.configure_pagination(paginationAutoPageSize=True) #Add pagination
         gb.configure_side_bar() #Add a sidebar
         gb.configure_selection('multiple', use_checkbox=True, groupSelectsChildren="Group checkbox select children") #Enable multi-row selection
