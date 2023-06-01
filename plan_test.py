@@ -413,7 +413,7 @@ if authentication_status:
 
         st.altair_chart(chart_3, use_container_width=True)
         
-        st.write(historique)
+        st.write("historique des activités")
         st.dataframe(experts_table.style.applymap(color_survived, subset=["taux d'exécution %"]))
         
         st.write("Feuilles de temps")
