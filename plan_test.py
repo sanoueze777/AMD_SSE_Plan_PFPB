@@ -431,7 +431,7 @@ if authentication_status:
                 fit_columns_on_grid_load=False,
                 enable_enterprise_modules=True,
                 height=350, 
-                width='150%',
+                width='10%',
                 reload_data=True
                 )
         
