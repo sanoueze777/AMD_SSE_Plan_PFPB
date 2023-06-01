@@ -434,7 +434,7 @@ if authentication_status:
                 width='100%',
                 reload_data=True
                 )
-        
+        """
         data = grid_response['data']
         data_x = data.to_csv("data_x.csv")
 
@@ -444,7 +444,7 @@ if authentication_status:
         file_name=f"feuille_de_temps_{data.loc[1,'Expert']}.csv",
         mime='text/csv',
         )
-
+        """
         
     if choice == "Suivi des missions":
     
