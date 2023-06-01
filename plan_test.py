@@ -436,18 +436,16 @@ if authentication_status:
                 )
         
         data = grid_response['data']
+        data_x = data.to_excel("data_x.xlsx")
+
         st.download_button(
         label="Enregistrer la feuille de temps xlsx",
-        data=data ,
+        data=data_x,
         file_name=f"feuille_de_temps_{data.loc[1,'Expert']}.csv",
         mime='text/csv',
         )
-        st.download_button(
-        label="Enregistrer la feuille de temps pdf",
-        data=data ,
-        file_name=f"feuille_de_temps_{data.loc[1,'Expert']}.pdf",
-        mime='text/pdf',
-        )
+
+        
     if choice == "Suivi des missions":
     
         Mission_list = missions_list
