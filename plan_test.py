@@ -435,9 +435,21 @@ if authentication_status:
                 reload_data=True
                 )
         
-        
+        data = grid_response['data']
+        st.download_button(
+        label="Enregistrer la feuille de temps xlsx",
+        data=data ,
+        file_name=f"feuille_de_temps_{data.loc[1,'Expert']}.csv",
+        mime='text/csv',
+        )
+        st.download_button(
+        label="Enregistrer la feuille de temps pdf",
+        data=data ,
+        file_name=f"feuille_de_temps_{data.loc[1,'Expert']}.pdf",
+        mime='text/pdf',
+        )
     if choice == "Suivi des missions":
-        
+    
         Mission_list = missions_list
         
         Activities_group_list = ["Réunions cadrage /démarrage","Atelier cadrage","Outils collecte","Rapport cadrage/démarrage","Collecte données 1 (entretiens )","Collecte données 2 (Revue doc/BD)","Reunion étape mise en œuvre","Rapports d'étude","Atelier examen /validation","Gestion / suivi de projet","Montage offres techniques","Gestion et animation du pôle"]
