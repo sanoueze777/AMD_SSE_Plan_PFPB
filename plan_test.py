@@ -413,8 +413,10 @@ if authentication_status:
 
         st.altair_chart(chart_3, use_container_width=True)
         
+        st.write(historique)
         st.dataframe(experts_table.style.applymap(color_survived, subset=["taux d'exécution %"]))
-
+        
+        st.write("Feuilles de temps")
         gb = GridOptionsBuilder.from_dataframe(experts_table)
         gb.configure_pagination(paginationAutoPageSize=True) #Add pagination
         gb.configure_side_bar() #Add a sidebar
@@ -429,7 +431,7 @@ if authentication_status:
                 fit_columns_on_grid_load=False,
                 enable_enterprise_modules=True,
                 height=350, 
-                width='100%',
+                width='150%',
                 reload_data=True
                 )
         
