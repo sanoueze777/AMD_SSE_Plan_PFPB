@@ -437,14 +437,14 @@ if authentication_status:
         
         data = grid_response['data']
         data_x = data.to_csv("data_x.csv")
-        """
+        
         st.download_button(
         label="Enregistrer la feuille de temps csv",
         data=data_x,
         file_name=f"feuille_de_temps_{data.loc[1,'Expert']}.csv",
         mime='text/csv',
         )
-        """
+        
         
     if choice == "Suivi des missions":
     
