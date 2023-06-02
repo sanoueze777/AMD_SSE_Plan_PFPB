@@ -160,11 +160,17 @@ def color_survived(val):
     color = 'green' if 50<val else 'pink'
     return f'background-color: {color}'
 
+full_message_temp ="""
+<div style="background-color:silver;overflow-x: auto; padding:10px;border-radius:5px;margin:10px;">
+<p style="text-align:justify;color:black;padding:10px">{}</p>
+</div>
+"""
 """"""""""""
 
 
 st.image("Capture d’écran 2022-10-17 175305.png", use_column_width=False)
-st.title("SYSTEME DE SUIVI DES MISSIONS | planification")
+title = "SYSTEME DE SUIVI DES MISSIONS | planification"
+st.markdown(full_message_temp.format(title),unsafe_allow_html=True)
 
 hide_streamlit_style = """
                 <style>
@@ -443,6 +449,12 @@ if authentication_status:
         data=data_x,
         file_name=f"feuille_de_temps_{data.loc[1,'Expert']}_{today}.csv",
         mime='text/csv',
+        )
+        st.download_button(
+        label="Enregistrer la feuille de temps png",
+        data=data_x,
+        file_name=f"feuille_de_temps_{data.loc[1,'Expert']}_{today}.png",
+        mime='image/png',
         )
         
         
