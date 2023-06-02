@@ -161,16 +161,17 @@ def color_survived(val):
     return f'background-color: {color}'
 
 full_message_temp ="""
-<div style="background-color:silver;overflow-x: auto; padding:10px;border-radius:5px;margin:10px;">
-<p style="text-align:justify;color:black;padding:10px">{}</p>
+<div style="background-color:{};padding:10px;border-radius:10px">
+<h1 style="color:{};text-align:center;">SYSTEME DE SUIVI DES MISSIONS</h1>
+<img src="Capture d’écran 2022-10-17 175305.png" alt="Avatar" style="vertical-align: middle;float:left;width: 100px;height: 100px;border-radius: 50%;">
 </div>
 """
 """"""""""""
 
 
-st.image("Capture d’écran 2022-10-17 175305.png", use_column_width=False)
+#st.image("Capture d’écran 2022-10-17 175305.png", use_column_width=False)
 title = "SYSTEME DE SUIVI DES MISSIONS | planification"
-st.markdown(full_message_temp.format(title),unsafe_allow_html=True)
+st.markdown(full_message_temp.format('royalblue','white'),unsafe_allow_html=True)
 
 hide_streamlit_style = """
                 <style>
