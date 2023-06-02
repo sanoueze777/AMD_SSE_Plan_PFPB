@@ -378,7 +378,8 @@ if authentication_status:
         currentYear = datetime.now().year
         #experts_table = experts_table[(pd.DatetimeIndex(experts_table['Date']).month==currentMonth) & (pd.DatetimeIndex(experts_table["Date"]).year==currentYear)]
         
-        st.write("Activité des experts ce mois")
+        st.divider()
+        st.("**Activité des experts ce mois**")
         
         
         experts_summary = experts_table.groupby("Expert")["Temps de travail"].sum()
@@ -421,7 +422,7 @@ if authentication_status:
         
         st.write("historique des activités")
         st.dataframe(experts_table.style.applymap(color_survived, subset=["taux d'exécution %"]))
-        
+        st.divider()
         st.write("Feuilles de temps")
         gb = GridOptionsBuilder.from_dataframe(experts_table)
         gb.configure_pagination(paginationAutoPageSize=True) #Add pagination
