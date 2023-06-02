@@ -379,7 +379,7 @@ if authentication_status:
         #experts_table = experts_table[(pd.DatetimeIndex(experts_table['Date']).month==currentMonth) & (pd.DatetimeIndex(experts_table["Date"]).year==currentYear)]
         
         st.divider()
-        st.("**Activité des experts ce mois**")
+        st.write("**Activité des experts ce mois**")
         
         
         experts_summary = experts_table.groupby("Expert")["Temps de travail"].sum()
@@ -420,10 +420,10 @@ if authentication_status:
 
         st.altair_chart(chart_3, use_container_width=True)
         
-        st.write("historique des activités")
+        st.write("**historique des activités**")
         st.dataframe(experts_table.style.applymap(color_survived, subset=["taux d'exécution %"]))
         st.divider()
-        st.write("Feuilles de temps")
+        st.write("**Feuilles de temps**")
         gb = GridOptionsBuilder.from_dataframe(experts_table)
         gb.configure_pagination(paginationAutoPageSize=True) #Add pagination
         gb.configure_side_bar() #Add a sidebar
