@@ -163,7 +163,6 @@ def color_survived(val):
 full_message_temp ="""
 <div style="background-color:{};padding:10px;border-radius:10px">
 <h1 style="color:{};text-align:center;">SYSTEME DE SUIVI DES MISSIONS</h1>
-<img src="Capture d’écran 2022-10-17 175305.png" alt="Avatar" style="vertical-align: middle;float:left;width: 100px;height: 100px;border-radius: 50%;">
 </div>
 """
 """"""""""""
