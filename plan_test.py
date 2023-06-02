@@ -436,7 +436,7 @@ if authentication_status:
                 )
         
         data = grid_response['data']
-        data_x = data.to_csv("data_x.csv")
+        data_x = data.to_csv(index=False).encode("utf-8")
         
         st.download_button(
         label="Enregistrer la feuille de temps csv",
