@@ -434,10 +434,10 @@ if authentication_status:
                 width='100%',
                 reload_data=True
                 )
-        """
+        
         data = grid_response['data']
         data_x = data.to_csv("data_x.csv")
-
+        """
         st.download_button(
         label="Enregistrer la feuille de temps csv",
         data=data_x,
