@@ -221,7 +221,7 @@ if authentication_status:
     for row in records2:
         experts_list.append(row[0])
     experts_list = experts_list.remove("")
-
+    experts_list 
     # Loading the cars dataset
     df = data.cars()
 
