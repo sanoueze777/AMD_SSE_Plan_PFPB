@@ -220,7 +220,9 @@ if authentication_status:
         missions_list.append(row[0])
     for row in records2:
         experts_list.append(row[0])
-    experts_list = experts_list.remove("")
+    for i in range(len(experts_list )):
+        if experts_list[i]== None:
+            experts_list.pop(i)
     experts_list 
     # Loading the cars dataset
     df = data.cars()
