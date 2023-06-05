@@ -221,7 +221,7 @@ if authentication_status:
     for row in records2:
         experts_list.append(row[0])
     for i in range(len(experts_list )):
-        if experts_list[i]== None:
+        if experts_list[i]== "":
             experts_list.pop(i)
     experts_list 
     # Loading the cars dataset
