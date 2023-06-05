@@ -223,7 +223,6 @@ if authentication_status:
     for i in range(len(experts_list )):
         if experts_list[i]== "":
             experts_list.pop(i)
-    experts_list 
     # Loading the cars dataset
     df = data.cars()
 
