@@ -7,6 +7,9 @@ credentials:
     Z_Benjamin:
       name: ZOUNGRANA Benjamin
       password: $2b$12$Dw1Wncyus5EXBrz28dIioOvjtP2gOBQ6.JQnjgtNjEkhDYwqizsdy # To be replaced with hashed password
+    K_Armel:
+      name: KABORE Armel
+      password: $2b$12$Dw1Wncyus5EXBrz28dIioOvjtP2gOBQ6.JQnjgtNjEkhDYwqizsdy # To be replaced with hashed password
     
    
       
