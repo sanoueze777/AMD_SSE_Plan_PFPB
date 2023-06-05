@@ -220,7 +220,7 @@ if authentication_status:
         missions_list.append(row[0])
     for row in records2:
         experts_list.append(row[0])
-
+    experts_list
 
     # Loading the cars dataset
     df = data.cars()
